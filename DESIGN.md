@@ -6,7 +6,7 @@
 - Audience: anyone exploring a playful 3D web demo.
 - Primary path: arrive, see the phoenix in motion, scroll through the rebirth story, inspect the model, and restart the experience.
 - Visual read: mythic sci-fi editorial, dark, sparse, cinematic.
-- Dials: design variance 9, motion intensity 8, visual density 3.
+- Dials: design variance 9, motion intensity 9, visual density 3.
 
 ## Existing-site audit
 
@@ -32,6 +32,8 @@
 ## Motion
 
 - Motion communicates the phoenix's journey: arrival, fall, turn, ascent, and return.
+- GSAP choreographs a single signature system across the DOM: an ignition-gate opening, masked chapter typography, a pinned manifesto, and restrained magnetic button feedback.
+- ScrollTrigger only owns DOM transforms and opacity. React Three Fiber remains the sole owner of the phoenix and WebGL render loop.
 - The model's embedded wing animation runs continuously unless paused.
 - Scroll is read inside the render loop and mapped to model position, rotation, scale, light, and camera.
 - Pointer drag provides direct object inspection.

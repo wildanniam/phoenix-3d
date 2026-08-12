@@ -20,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
   background: var(--surface);
 }
 
@@ -27,7 +28,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   background: var(--surface);
 }
@@ -92,6 +93,78 @@ a:focus-visible {
   background:
     linear-gradient(90deg, rgba(10, 8, 7, 0.42) 0%, rgba(10, 8, 7, 0.05) 45%, rgba(10, 8, 7, 0.24) 100%),
     linear-gradient(180deg, rgba(10, 8, 7, 0.48) 0%, transparent 32%, rgba(10, 8, 7, 0.64) 100%);
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 18vh;
+  right: clamp(0.65rem, 1.3vw, 1.25rem);
+  z-index: 7;
+  width: 2px;
+  height: 64vh;
+  pointer-events: none;
+}
+
+.scroll-progress__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--ember);
+  box-shadow: 0 0 16px rgba(232, 82, 28, 0.42);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.ignition {
+  position: fixed;
+  inset: 0;
+  z-index: 14;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ignition__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(50% + 1px);
+  background: var(--surface);
+  will-change: transform;
+}
+
+.ignition__panel--left {
+  left: 0;
+}
+
+.ignition__panel--right {
+  right: 0;
+}
+
+.ignition__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  justify-items: center;
+  gap: 1.1rem;
+  transform: translate(-50%, -50%);
+}
+
+.ignition__core-line {
+  width: 1px;
+  height: min(28vh, 240px);
+  background: var(--ember);
+  box-shadow: 0 0 28px rgba(232, 82, 28, 0.55);
+  transform-origin: center;
+}
+
+.ignition__core strong {
+  color: var(--muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .scene {
@@ -333,7 +406,20 @@ h1 {
   text-transform: uppercase;
 }
 
-h1 span {
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding: 0.08em 0;
+  margin: -0.08em 0;
+}
+
+.hero__line > span {
+  display: block;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.hero__line--outline > span {
   color: transparent;
   -webkit-text-stroke: 1.5px var(--ink);
 }
@@ -362,7 +448,7 @@ h1 span {
   white-space: nowrap;
   background: rgba(141, 37, 11, 0.26);
   box-shadow: inset 0 0 0 0 var(--ember);
-  transition: color 240ms ease, box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1), transform 140ms ease;
+  transition: color 240ms ease, box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
@@ -372,7 +458,7 @@ h1 span {
 }
 
 .primary-action:active {
-  transform: translateY(1px) scale(0.985);
+  scale: 0.985;
 }
 
 .chapter--right {
@@ -401,6 +487,19 @@ h1 span {
   text-transform: uppercase;
 }
 
+.heading-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.07em 0;
+  margin: -0.07em 0;
+}
+
+.heading-line > span {
+  display: block;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
 .chapter__copy > p:last-child {
   max-width: 40ch;
   color: var(--muted);
@@ -422,6 +521,16 @@ h1 span {
   font-size: clamp(3.8rem, 9.5vw, 9.5rem);
   text-align: center;
   -webkit-text-stroke: 1.5px var(--ink);
+}
+
+.manifesto__word {
+  display: inline-block;
+  margin-right: 0.22em;
+  will-change: transform, opacity;
+}
+
+.manifesto__word:last-child {
+  margin-right: 0;
 }
 
 .chapter--final {
@@ -465,6 +574,12 @@ footer a {
   .site-header nav > a,
   .site-header nav > button:first-child {
     display: none;
+  }
+
+  .scroll-progress {
+    top: 14vh;
+    right: 0.45rem;
+    height: 72vh;
   }
 
   .hero__copy,
@@ -535,6 +650,11 @@ footer a {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .ignition,
+  .scroll-progress {
+    display: none !important;
   }
 }
 
